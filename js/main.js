@@ -15,6 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
   initCalendarButton();
   fitHeroNames();
   window.addEventListener("resize", fitHeroNames);
+  if (document.fonts) {
+    document.fonts.ready.then(fitHeroNames);
+  }
 });
 
 
@@ -589,17 +592,22 @@ async function initDynamicData() {
    9. TỰ ĐỘNG CĂN CHỈNH TÊN CHÚ RỂ VÀ CÔ DÂU TRÊN 1 HÀNG
    ========================================================================== */
 function fitHeroNames() {
-  // 1. Hero banner names
-  const names = document.querySelectorAll(".hero-names .name");
-  names.forEach(el => {
+  // 1. Hero banner names (Kiều Thu Hà & Nguyễn Hoàng Thiên Bình)
+  const heroNames = document.querySelectorAll(".hero-names .name");
+  heroNames.forEach(el => {
+    // Reset font-size inline về rỗng để ăn theo CSS clamp chuẩn trước
+    el.style.fontSize = "";
     el.style.whiteSpace = "nowrap";
+
     const parent = el.parentElement;
     if (!parent) return;
-    const maxWidth = parent.clientWidth || (window.innerWidth - 32);
+    const maxWidth = Math.min(parent.clientWidth || window.innerWidth, window.innerWidth - 24);
     let size = parseFloat(window.getComputedStyle(el).fontSize);
+
+    // Chỉ co nhẹ nếu tràn viền thực tế, giữ chữ luôn to đẹp (sàn 26px)
     let iterations = 0;
-    while (el.scrollWidth > maxWidth && size > 14 && iterations < 30) {
-      size -= 1;
+    while (el.scrollWidth > maxWidth && size > 26 && iterations < 20) {
+      size -= 0.5;
       el.style.fontSize = size + "px";
       iterations++;
     }
@@ -608,17 +616,20 @@ function fitHeroNames() {
   // 2. Couple section card names (Cô Dâu & Chú Rể)
   const personNames = document.querySelectorAll(".person-card .person-name");
   personNames.forEach(el => {
+    // Reset font-size inline về rỗng để ăn theo CSS clamp chuẩn trước
+    el.style.fontSize = "";
     el.style.whiteSpace = "nowrap";
+
     const card = el.closest(".person-card");
     if (!card) return;
     const cardStyle = window.getComputedStyle(card);
-    const pLeft = parseFloat(cardStyle.paddingLeft) || 16;
-    const pRight = parseFloat(cardStyle.paddingRight) || 16;
-    const maxAvailableWidth = (card.clientWidth - pLeft - pRight - 6) || (window.innerWidth - 60);
+    const pLeft = parseFloat(cardStyle.paddingLeft) || 14;
+    const pRight = parseFloat(cardStyle.paddingRight) || 14;
+    const maxAvailableWidth = (card.clientWidth - pLeft - pRight) || (window.innerWidth - 48);
 
     let size = parseFloat(window.getComputedStyle(el).fontSize);
     let iterations = 0;
-    while (el.scrollWidth > maxAvailableWidth && size > 13 && iterations < 35) {
+    while (el.scrollWidth > maxAvailableWidth && size > 22 && iterations < 20) {
       size -= 0.5;
       el.style.fontSize = size + "px";
       iterations++;
