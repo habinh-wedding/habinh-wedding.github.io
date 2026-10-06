@@ -283,20 +283,80 @@ button {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 
 .wd-mobile-links a {
-  font-size: 1.05rem;
+  font-size: 0.96rem;
   font-weight: 500;
   color: var(--ink);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   padding: 10px 14px;
-  border-radius: 12px;
+  border-radius: 14px;
   background: #ffffff;
   border: 1px solid var(--border-line);
+  box-shadow: 0 2px 6px rgba(45, 59, 33, 0.04);
+  text-decoration: none;
+  transition: all 0.22s ease;
+}
+
+.wd-mobile-links a:hover,
+.wd-mobile-links a:active {
+  background: var(--sage-pale);
+  border-color: var(--sage-medium);
+  color: var(--sage-dark);
+  transform: translateX(4px);
+}
+
+.nav-icon-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--sage-pale);
+  border: 1px solid var(--border-line);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sage);
+  flex-shrink: 0;
+  transition: all 0.22s ease;
+}
+
+.wd-mobile-links a:hover .nav-icon-badge,
+.wd-mobile-links a:active .nav-icon-badge {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: #ffffff;
+}
+
+.nav-svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.nav-link-text {
+  flex: 1;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.nav-chevron {
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+  opacity: 0.45;
+  flex-shrink: 0;
+  transition: transform 0.22s ease, opacity 0.22s ease, color 0.22s ease;
+}
+
+.wd-mobile-links a:hover .nav-chevron,
+.wd-mobile-links a:active .nav-chevron {
+  transform: translateX(3px);
+  opacity: 0.9;
+  color: var(--sage);
 }
 
 /* Floating Audio Player Widget */
