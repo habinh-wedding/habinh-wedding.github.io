@@ -6,6 +6,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   initFallingPetals();
+  initDynamicData();
   initCountdown();
   initAudioPlayer();
   initNavigation();
@@ -13,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initRSVP();
   initCalendarButton();
 });
+
 
 /* ==========================================================================
    1. HIỆU ỨNG CÁNH HOA & LÁ SAGE BAY LỮNG LỜ
@@ -70,8 +72,6 @@ function createPetal(container, svgs, initial) {
    2. ĐỒNG HỒ ĐẾM NGƯỢC (ĐẾN 09:00 NGÀY 28/11/2026)
    ========================================================================== */
 function initCountdown() {
-  const targetDate = new Date("2026-11-28T09:00:00+07:00").getTime();
-
   const daysEl = document.getElementById("cd-days");
   const hoursEl = document.getElementById("cd-hours");
   const minutesEl = document.getElementById("cd-minutes");
@@ -80,6 +80,7 @@ function initCountdown() {
   if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
   function update() {
+    const targetDate = window.TARGET_WEDDING_DATETIME || new Date("2026-11-28T09:00:00+07:00").getTime();
     const now = new Date().getTime();
     const distance = targetDate - now;
 
@@ -425,3 +426,157 @@ function initCalendarButton() {
     window.open(gcalUrl, "_blank");
   });
 }
+
+/* ==========================================================================
+   8. TỰ ĐỘNG NẠP DỮ LIỆU ĐỘNG TỪ ADMIN / DATA JSON
+   ========================================================================== */
+async function initDynamicData() {
+  let data = null;
+  const localSaved = localStorage.getItem("admin_wedding_data");
+  if (localSaved) {
+    try {
+      data = JSON.parse(localSaved);
+    } catch (e) {}
+  }
+
+  if (!data) {
+    try {
+      const res = await fetch(`data/wedding-data.json?v=${Date.now()}`);
+      if (res.ok) {
+        data = await res.json();
+      }
+    } catch (e) {}
+  }
+
+  if (!data) return;
+
+  // Cập nhật Cô Dâu
+  if (data.bride) {
+    const brideNameEl = document.querySelector("#couple .person-card:first-child .person-name");
+    if (brideNameEl && data.bride.name) brideNameEl.innerText = data.bride.name;
+    const brideImgEl = document.querySelector("#couple .person-card:first-child .person-photo-arch img");
+    if (brideImgEl && data.bride.photo) brideImgEl.src = data.bride.photo;
+    const brideParentsEl = document.querySelector("#couple .person-card:first-child .parents-names");
+    if (brideParentsEl) {
+      brideParentsEl.innerHTML = `
+        <span>Thân phụ: <b>${escapeHtml(data.bride.father || '')}</b></span>
+        <span>Thân mẫu: <b>${escapeHtml(data.bride.mother || '')}</b></span>
+      `;
+    }
+  }
+
+  // Cập nhật Chú Rể
+  if (data.groom) {
+    const groomNameEl = document.querySelector("#couple .person-card:last-child .person-name");
+    if (groomNameEl && data.groom.name) groomNameEl.innerText = data.groom.name;
+    const groomImgEl = document.querySelector("#couple .person-card:last-child .person-photo-arch img");
+    if (groomImgEl && data.groom.photo) groomImgEl.src = data.groom.photo;
+    const groomParentsEl = document.querySelector("#couple .person-card:last-child .parents-names");
+    if (groomParentsEl) {
+      groomParentsEl.innerHTML = `
+        <span>Thân phụ: <b>${escapeHtml(data.groom.father || '')}</b></span>
+        <span>Thân mẫu: <b>${escapeHtml(data.groom.mother || '')}</b></span>
+      `;
+    }
+  }
+
+  // Cập nhật Tên Hero & Brand
+  if (data.bride && data.groom) {
+    const brandEl = document.querySelector(".wd-brand");
+    if (brandEl) {
+      const bShort = data.bride.name.split(" ").pop();
+      const gShort = data.groom.name.split(" ").pop();
+      brandEl.innerHTML = `<span>${escapeHtml(bShort)}</span><i>♡</i><span>${escapeHtml(gShort)}</span>`;
+    }
+    const heroNamesEl = document.querySelector(".hero-names");
+    if (heroNamesEl) {
+      heroNamesEl.innerHTML = `
+        <span class="name">${escapeHtml(data.bride.name)}</span>
+        <span class="amp">&amp;</span>
+        <span class="name">${escapeHtml(data.groom.name)}</span>
+      `;
+    }
+    const footerNamesEl = document.querySelector(".footer-names");
+    if (footerNamesEl) {
+      const bShort = data.bride.name.split(" ").pop();
+      const gShort = data.groom.name.split(" ").pop();
+      footerNamesEl.innerText = `${bShort} & ${gShort}`;
+    }
+  }
+
+  // Cập nhật Ảnh Hero
+  if (data.hero && data.hero.photo) {
+    const heroImgEl = document.querySelector(".hero-photo-arch img");
+    if (heroImgEl) heroImgEl.src = data.hero.photo;
+  }
+
+  // Cập nhật Nghi lễ & Thời gian
+  if (data.ceremony) {
+    const tagEl = document.querySelector(".hero-ceremony-tag");
+    if (tagEl && data.ceremony.tag) {
+      tagEl.innerHTML = `<span class="sprig-icon" style="width:18px;height:24px;"></span> ${escapeHtml(data.ceremony.tag)} <span class="sprig-icon" style="width:18px;height:24px;transform:scaleX(-1);"></span>`;
+    }
+    const heroDateEl = document.querySelector(".hero-date-badge");
+    if (heroDateEl && data.ceremony.dateDisplay) heroDateEl.innerHTML = escapeHtml(data.ceremony.dateDisplay);
+    const heroLunarEl = document.querySelector(".hero-lunar-date");
+    if (heroLunarEl && data.ceremony.lunarDate) heroLunarEl.innerText = `(${data.ceremony.lunarDate})`;
+
+    const cTitleEl = document.querySelector(".ceremony-main-title");
+    if (cTitleEl && data.ceremony.title) cTitleEl.innerText = data.ceremony.title;
+    const cSubEl = document.querySelector(".ceremony-sub");
+    if (cSubEl && data.ceremony.subtitle) cSubEl.innerText = data.ceremony.subtitle;
+    const cTimeEl = document.querySelector(".ceremony-time-large");
+    if (cTimeEl && data.ceremony.timeDisplay) cTimeEl.innerText = data.ceremony.timeDisplay;
+    const cLunarEl = document.querySelector(".ceremony-lunar-highlight");
+    if (cLunarEl && data.ceremony.lunarDate) cLunarEl.innerText = `(Tức ngày ${data.ceremony.lunarDate})`;
+    const venueNameEl = document.querySelector(".ceremony-venue-name");
+    if (venueNameEl && data.ceremony.venueName) venueNameEl.innerText = data.ceremony.venueName;
+    const venueAddrEl = document.querySelector(".ceremony-venue-address");
+    if (venueAddrEl && data.ceremony.venueAddress) venueAddrEl.innerText = data.ceremony.venueAddress;
+    const mapBtn = document.querySelector(".ceremony-actions a.btn-primary");
+    if (mapBtn && data.ceremony.mapUrl) mapBtn.href = data.ceremony.mapUrl;
+    const mapIframe = document.querySelector(".map-iframe-container iframe");
+    if (mapIframe && data.ceremony.mapEmbedCoords) {
+      mapIframe.src = `https://maps.google.com/maps?q=${data.ceremony.mapEmbedCoords}&hl=vi&z=16&output=embed`;
+    }
+
+    if (data.ceremony.datetime) {
+      window.TARGET_WEDDING_DATETIME = new Date(data.ceremony.datetime).getTime();
+    }
+  }
+
+  // Cập nhật Lời tựa
+  if (data.quote) {
+    const qTextEl = document.querySelector(".quote-text");
+    if (qTextEl && data.quote.text) qTextEl.innerText = `“${data.quote.text}”`;
+    const qAuthEl = document.querySelector(".quote-author");
+    if (qAuthEl && data.quote.author) qAuthEl.innerText = data.quote.author;
+  }
+
+  // Cập nhật Nhạc
+  if (data.music && data.music.url) {
+    const audioEl = document.getElementById("bg-music");
+    if (audioEl) {
+      audioEl.src = data.music.url;
+    }
+    const tipEl = document.getElementById("music-tooltip");
+    if (tipEl && data.music.title) {
+      tipEl.innerText = `Chạm để nghe: ${data.music.title} ♫`;
+    }
+  }
+
+  // Cập nhật Album
+  if (data.gallery && data.gallery.length > 0) {
+    const gridEl = document.querySelector(".gallery-grid");
+    if (gridEl) {
+      gridEl.innerHTML = data.gallery.map(item => `
+        <div class="gallery-item">
+          <img src="${item.url}" alt="${escapeHtml(item.caption || 'Ảnh cưới')}" loading="lazy">
+          <div class="gallery-overlay"><span>${escapeHtml(item.caption || '')}</span></div>
+        </div>
+      `).join("");
+      initLightbox();
+    }
+  }
+}
+

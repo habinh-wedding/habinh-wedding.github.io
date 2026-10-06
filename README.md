@@ -73,6 +73,23 @@ git push -u origin main
    - Thư mục chọn **`/(root)`**
    - Bấm **Save**.
 3. Chờ khoảng 1 - 2 phút, GitHub sẽ cung cấp link trang web thiệp cưới có dạng:
-   **`https://<tai-khoan-cua-ban>.github.io/ThiepCuoi/`**
+   **`https://habinh-wedding.github.io/`**
 
-Bạn có thể gửi đường link này qua Zalo, Messenger hoặc tạo mã QR in lên thiệp giấy gửi đến bạn bè, người thân!
+---
+
+## 🔒 Trang Quản Trị Dành Cho Cô Dâu & Chú Rể (Admin Panel)
+
+Trang web đã tích hợp sẵn trang quản trị dành riêng cho anh chị chỉnh sửa mọi nội dung:
+- **Địa chỉ truy cập:** [https://habinh-wedding.github.io/admin.html](https://habinh-wedding.github.io/admin.html)
+- **Mật khẩu quản trị:** `habinh2026`
+
+### Các tính năng trong trang Quản trị:
+1. **Cặp Đôi & Gia Đình:** Đổi tên cô dâu, chú rể, tên bố mẹ hai bên, đổi ảnh chân dung từ máy tính.
+2. **Lễ Cưới & Địa Điểm:** Đổi giờ giấc, ngày tháng, âm lịch, tên địa điểm, link Google Maps.
+3. **Quản Lý Album Ảnh:** Tải thêm ảnh mới từ máy tính vào album, sửa chú thích, xóa ảnh cũ, đổi ảnh bìa chính (Hero banner).
+4. **Nhạc Nền:** Tải bài hát MP3 bất kỳ từ máy tính lên hoặc dán link nhạc mới, có nút nghe thử trực tiếp.
+5. **Lưu & Xuất Bản:**
+   - **Lưu & Xem thử (Local):** Lưu ngay vào trình duyệt trên máy để xem trước tức thì.
+   - **Xuất bản lên GitHub Pages:** Nhập token GitHub một lần để hệ thống tự động ghi đè file `data/wedding-data.json` lên GitHub, toàn bộ khách mời sẽ thấy thông tin mới sau 1 phút.
+   - **Tải file data.json:** Tải file cấu hình về máy để lưu trữ hoặc commit thủ công.
+
