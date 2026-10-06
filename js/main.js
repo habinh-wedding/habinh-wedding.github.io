@@ -1,0 +1,427 @@
+/**
+ * THIỆP CƯỚI ONLINE - GIAO DIỆN VƯỜN HOA (BOTANICAL SAGE GARDEN)
+ * Cô dâu: Kiều Thu Hà & Chú rể: Nguyễn Hoàng Thiên Bình
+ * Lễ Vu Quy: 09:00 ngày 28/11/2026 (20/10 Âm lịch)
+ */
+
+document.addEventListener("DOMContentLoaded", () => {
+  initFallingPetals();
+  initCountdown();
+  initAudioPlayer();
+  initNavigation();
+  initLightbox();
+  initRSVP();
+  initCalendarButton();
+});
+
+/* ==========================================================================
+   1. HIỆU ỨNG CÁNH HOA & LÁ SAGE BAY LỮNG LỜ
+   ========================================================================== */
+function initFallingPetals() {
+  const container = document.getElementById("petals-container");
+  if (!container) return;
+
+  const petalSVGs = [
+    // Soft petal
+    `<svg width="18" height="24" viewBox="0 0 20 28" fill="#e8c7b8" opacity="0.8"><path d="M10 0 C18 6 20 18 10 28 C0 18 2 6 10 0 Z"/></svg>`,
+    // Sage leaf
+    `<svg width="16" height="26" viewBox="0 0 16 26" fill="#889c72" opacity="0.75"><path d="M8 0 C15 7 15 19 8 26 C1 19 1 7 8 0 Z"/></svg>`,
+    // Blossom petal
+    `<svg width="20" height="22" viewBox="0 0 20 20" fill="#f4ded4" opacity="0.85"><circle cx="10" cy="10" r="9"/></svg>`
+  ];
+
+  const maxPetals = window.innerWidth < 768 ? 14 : 24;
+
+  for (let i = 0; i < maxPetals; i++) {
+    createPetal(container, petalSVGs, true);
+  }
+
+  setInterval(() => {
+    if (document.querySelectorAll(".petal").length < maxPetals) {
+      createPetal(container, petalSVGs, false);
+    }
+  }, 1800);
+}
+
+function createPetal(container, svgs, initial) {
+  const el = document.createElement("div");
+  el.className = "petal";
+  const svgIndex = Math.floor(Math.random() * svgs.length);
+  el.innerHTML = svgs[svgIndex];
+
+  const left = Math.random() * 100;
+  const duration = 7 + Math.random() * 8; // 7s - 15s
+  const delay = initial ? Math.random() * duration : 0;
+  const size = 0.6 + Math.random() * 0.7;
+
+  el.style.left = `${left}vw`;
+  el.style.animationDuration = `${duration}s`;
+  el.style.animationDelay = `-${delay}s`;
+  el.style.transform = `scale(${size})`;
+
+  container.appendChild(el);
+
+  setTimeout(() => {
+    el.remove();
+  }, (duration + delay) * 1000);
+}
+
+/* ==========================================================================
+   2. ĐỒNG HỒ ĐẾM NGƯỢC (ĐẾN 09:00 NGÀY 28/11/2026)
+   ========================================================================== */
+function initCountdown() {
+  const targetDate = new Date("2026-11-28T09:00:00+07:00").getTime();
+
+  const daysEl = document.getElementById("cd-days");
+  const hoursEl = document.getElementById("cd-hours");
+  const minutesEl = document.getElementById("cd-minutes");
+  const secondsEl = document.getElementById("cd-seconds");
+
+  if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+  function update() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance <= 0) {
+      daysEl.innerText = "00";
+      hoursEl.innerText = "00";
+      minutesEl.innerText = "00";
+      secondsEl.innerText = "00";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    daysEl.innerText = String(days).padStart(2, "0");
+    hoursEl.innerText = String(hours).padStart(2, "0");
+    minutesEl.innerText = String(minutes).padStart(2, "0");
+    secondsEl.innerText = String(seconds).padStart(2, "0");
+  }
+
+  update();
+  setInterval(update, 1000);
+}
+
+/* ==========================================================================
+   3. TRÌNH PHÁT NHẠC NỀN (BEAUTIFUL IN WHITE)
+   ========================================================================== */
+function initAudioPlayer() {
+  const audio = document.getElementById("bg-music");
+  const playBtn = document.getElementById("music-toggle-btn");
+  const tooltip = document.getElementById("music-tooltip");
+
+  if (!audio || !playBtn) return;
+
+  let isPlaying = false;
+  let hasInteracted = false;
+
+  function playAudio() {
+    audio.play().then(() => {
+      isPlaying = true;
+      playBtn.classList.add("spinning");
+      if (tooltip) tooltip.innerText = "Đang phát: Beautiful in White ♫";
+    }).catch(err => {
+      console.log("Autoplay waiting for user gesture:", err);
+    });
+  }
+
+  function pauseAudio() {
+    audio.pause();
+    isPlaying = false;
+    playBtn.classList.remove("spinning");
+    if (tooltip) tooltip.innerText = "Đã tạm dừng nhạc";
+  }
+
+  playBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (isPlaying) {
+      pauseAudio();
+    } else {
+      playAudio();
+    }
+  });
+
+  // Tự động phát khi người dùng chạm hoặc cuộn lần đầu
+  function firstInteractionTrigger() {
+    if (!hasInteracted && !isPlaying) {
+      hasInteracted = true;
+      playAudio();
+    }
+  }
+
+  window.addEventListener("click", firstInteractionTrigger, { once: true });
+  window.addEventListener("touchstart", firstInteractionTrigger, { once: true });
+  window.addEventListener("scroll", firstInteractionTrigger, { once: true });
+
+  // Hiện tooltip 3s rồi ẩn
+  setTimeout(() => {
+    if (tooltip) tooltip.classList.add("visible");
+    setTimeout(() => {
+      if (tooltip) tooltip.classList.remove("visible");
+    }, 4000);
+  }, 1200);
+}
+
+/* ==========================================================================
+   4. NAVIGATION VÀ MENU MOBILE
+   ========================================================================== */
+function initNavigation() {
+  const menuBtn = document.getElementById("menu-toggle-btn");
+  const drawer = document.getElementById("mobile-drawer");
+  const links = document.querySelectorAll(".wd-menu-links a, .wd-mobile-links a");
+
+  if (menuBtn && drawer) {
+    menuBtn.addEventListener("click", () => {
+      const isOpen = drawer.classList.contains("open");
+      if (isOpen) {
+        drawer.classList.remove("open");
+        menuBtn.classList.remove("open");
+      } else {
+        drawer.classList.add("open");
+        menuBtn.classList.add("open");
+      }
+    });
+
+    links.forEach(link => {
+      link.addEventListener("click", () => {
+        drawer.classList.remove("open");
+        menuBtn.classList.remove("open");
+      });
+    });
+  }
+
+  // Active section highlight on scroll
+  const sections = document.querySelectorAll("section[id]");
+  window.addEventListener("scroll", () => {
+    const scrollY = window.pageYOffset;
+    sections.forEach(current => {
+      const sectionHeight = current.offsetHeight;
+      const sectionTop = current.offsetTop - 100;
+      const sectionId = current.getAttribute("id");
+
+      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+        document.querySelectorAll(`.wd-menu-links a[href*=${sectionId}]`).forEach(el => {
+          el.classList.add("active");
+        });
+      } else {
+        document.querySelectorAll(`.wd-menu-links a[href*=${sectionId}]`).forEach(el => {
+          el.classList.remove("active");
+        });
+      }
+    });
+  });
+}
+
+/* ==========================================================================
+   5. LIGHTBOX XEM ẢNH PHÓNG TO
+   ========================================================================== */
+function initLightbox() {
+  const modal = document.getElementById("lightbox-modal");
+  const imgEl = document.getElementById("lightbox-img");
+  const closeBtn = document.getElementById("lightbox-close");
+  const prevBtn = document.getElementById("lightbox-prev");
+  const nextBtn = document.getElementById("lightbox-next");
+  const items = document.querySelectorAll(".gallery-item img");
+
+  if (!modal || !imgEl || items.length === 0) return;
+
+  const images = Array.from(items).map(img => img.src);
+  let currentIndex = 0;
+
+  function showImage(index) {
+    currentIndex = (index + images.length) % images.length;
+    imgEl.src = images[currentIndex];
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+
+  items.forEach((item, index) => {
+    item.parentElement.addEventListener("click", () => {
+      showImage(index);
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (prevBtn) prevBtn.addEventListener("click", (e) => { e.stopPropagation(); showImage(currentIndex - 1); });
+  if (nextBtn) nextBtn.addEventListener("click", (e) => { e.stopPropagation(); showImage(currentIndex + 1); });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Bấm ESC hoặc phím mũi tên
+  window.addEventListener("keydown", (e) => {
+    if (!modal.classList.contains("active")) return;
+    if (e.key === "Escape") closeModal();
+    if (e.key === "ArrowLeft") showImage(currentIndex - 1);
+    if (e.key === "ArrowRight") showImage(currentIndex + 1);
+  });
+
+  // Hỗ trợ vuốt chạm trên điện thoại (touch swipe)
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  modal.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  modal.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    if (touchStartX - touchEndX > 50) {
+      showImage(currentIndex + 1); // Vuốt sang trái -> Ảnh tiếp
+    }
+    if (touchEndX - touchStartX > 50) {
+      showImage(currentIndex - 1); // Vuốt sang phải -> Ảnh trước
+    }
+  }, { passive: true });
+}
+
+/* ==========================================================================
+   6. RSVP & SỔ LƯU BÚT LỜI CHÚC (LOCALSTORAGE + TÍCH HỢP GOOGLE SHEET)
+   ========================================================================== */
+function initRSVP() {
+  const form = document.getElementById("rsvp-form");
+  const alertEl = document.getElementById("rsvp-alert");
+  const wishesList = document.getElementById("wishes-list");
+
+  // Dữ liệu lời chúc mẫu ban đầu
+  const initialWishes = [
+    {
+      name: "Bạn thân Thu Hà",
+      role: "Bạn cô dâu",
+      message: "Chúc cô dâu Thu Hà và chú rể Thiên Bình mãi mãi hạnh phúc, bách niên giai lão, cùng nhau đi qua mọi thăng trầm của cuộc sống!",
+      time: "Hôm nay"
+    },
+    {
+      name: "Gia đình Bác Hùng",
+      role: "Họ hàng",
+      message: "Mừng ngày vu quy của cháu Hà. Chúc hai cháu trăm năm tình viên mãn, bạc đầu nghĩa phu thê!",
+      time: "Hôm qua"
+    },
+    {
+      name: "Đồng nghiệp",
+      role: "Đồng nghiệp",
+      message: "Chúc mừng hạnh phúc hai bạn! Chúc một hành trình mới ngập tràn tiếng cười và yêu thương ngọt ngào.",
+      time: "2 ngày trước"
+    }
+  ];
+
+  // Lấy dữ liệu từ localStorage hoặc dùng mẫu
+  let savedWishes = [];
+  try {
+    const raw = localStorage.getItem("wedding_wishes_th_tb");
+    if (raw) {
+      savedWishes = JSON.parse(raw);
+    } else {
+      savedWishes = initialWishes;
+      localStorage.setItem("wedding_wishes_th_tb", JSON.stringify(savedWishes));
+    }
+  } catch (e) {
+    savedWishes = initialWishes;
+  }
+
+  function renderWishes() {
+    if (!wishesList) return;
+    wishesList.innerHTML = savedWishes.map(item => `
+      <div class="wish-card">
+        <div class="wish-author">
+          ${escapeHtml(item.name)}
+          ${item.role ? `<span class="wish-role-tag">${escapeHtml(item.role)}</span>` : ""}
+        </div>
+        <p class="wish-message">"${escapeHtml(item.message)}"</p>
+        <div class="wish-time">${item.time || "Vừa xong"}</div>
+      </div>
+    `).join("");
+  }
+
+  renderWishes();
+
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const nameInput = document.getElementById("guest-name");
+      const roleInput = document.getElementById("guest-role");
+      const attendInput = document.querySelector("input[name='attend']:checked");
+      const messageInput = document.getElementById("guest-message");
+
+      const name = nameInput ? nameInput.value.trim() : "";
+      const role = roleInput ? roleInput.value : "Khách mời";
+      const attend = attendInput ? attendInput.value : "Có";
+      const message = messageInput ? messageInput.value.trim() : "";
+
+      if (!name) {
+        alert("Vui lòng nhập tên của bạn nhé!");
+        return;
+      }
+
+      // Thêm vào danh sách lời chúc
+      if (message) {
+        savedWishes.unshift({
+          name: name,
+          role: role,
+          message: message,
+          time: "Vừa xong"
+        });
+        try {
+          localStorage.setItem("wedding_wishes_th_tb", JSON.stringify(savedWishes));
+        } catch (err) {}
+        renderWishes();
+      }
+
+      // Hiển thị thông báo thành công
+      if (alertEl) {
+        alertEl.style.display = "block";
+        alertEl.innerText = `Cảm ơn ${name} đã gửi lời chúc và xác nhận tham dự cùng gia đình! ❤️`;
+        setTimeout(() => {
+          alertEl.style.display = "none";
+        }, 5000);
+      }
+
+      form.reset();
+    });
+  }
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return str.replace(/[&<>"']/g, function(m) {
+    return {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    }[m];
+  });
+}
+
+/* ==========================================================================
+   7. THÊM VÀO LỊCH (GOOGLE CALENDAR & .ICS)
+   ========================================================================== */
+function initCalendarButton() {
+  const btn = document.getElementById("btn-add-calendar");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    // Sự kiện 09:00 - 12:00 ngày 28/11/2026 (GMT+7)
+    // UTC: 20261128T020000Z đến 20261128T050000Z
+    const title = encodeURIComponent("Lễ Vu Quy: Kiều Thu Hà & Nguyễn Hoàng Thiên Bình");
+    const details = encodeURIComponent("Lễ Vu Quy và Tiệc Mừng tại Nhà Gái. Rất hân hạnh được đón tiếp!");
+    const location = encodeURIComponent("Thôn Trung Hưng, xã Hợp Thịnh, thành phố Bắc Ninh");
+    const dates = "20261128T020000Z/20261128T050000Z";
+
+    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
+
+    window.open(gcalUrl, "_blank");
+  });
+}
