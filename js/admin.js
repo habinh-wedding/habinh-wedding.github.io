@@ -357,7 +357,7 @@ function collectFormData() {
   weddingData.groom = {
     name: getVal("groom-name") || "Nguyễn Hoàng Thiên Bình",
     role: "Chú Rể",
-    photo: document.getElementById("preview-groom-img")?.src || "img/groom_front.jpg",
+    photo: document.getElementById("preview-groom-img")?.src || "img/groom.jpg",
     father: getVal("groom-father") || "Nguyễn Duy Hiển",
     mother: getVal("groom-mother") || "Phùng Thiên Hương"
   };

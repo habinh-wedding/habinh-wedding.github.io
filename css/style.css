@@ -718,10 +718,13 @@ button {
 
 .person-name {
   font-family: var(--font-cursive);
-  font-size: clamp(2.4rem, 6vw, 3.2rem);
-  line-height: 1.15;
+  font-size: clamp(1.6rem, 4.4vw, 2.3rem);
+  line-height: 1.2;
   color: var(--sage-dark);
   margin-bottom: 16px;
+  white-space: nowrap !important;
+  text-wrap: nowrap !important;
+  max-width: 100%;
 }
 
 .parents-box {
@@ -1501,7 +1504,13 @@ button {
   }
 
   .person-card {
-    padding: 26px 16px 22px;
+    padding: 24px 14px 22px;
+  }
+
+  .person-name {
+    font-size: clamp(1.3rem, 5.2vw, 1.8rem) !important;
+    white-space: nowrap !important;
+    text-wrap: nowrap !important;
   }
 
   .event-container-card {
