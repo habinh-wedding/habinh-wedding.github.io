@@ -431,60 +431,90 @@ button {
    ========================================================================== */
 .hero-section {
   position: relative;
-  padding-top: 86px;
-  padding-bottom: 50px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  overflow: hidden;
+  padding: 100px 20px 60px;
+}
+
+.hero-bg-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
   overflow: hidden;
 }
 
-.hero-bg-accent {
+.hero-bg-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  transform: scale(1.02);
+  transition: transform 8s ease-out;
+}
+
+.hero-gradient-overlay {
   position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(880px, 94%);
-  height: 480px;
-  background: radial-gradient(circle at center, var(--sage-light) 0%, transparent 70%);
-  opacity: 0.6;
-  z-index: 0;
-  pointer-events: none;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(16, 23, 13, 0.58) 0%,
+    rgba(16, 23, 13, 0.35) 45%,
+    rgba(16, 23, 13, 0.82) 100%
+  );
+  z-index: 1;
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-ceremony-tag {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
   font-size: 0.82rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: var(--sage);
-  background: var(--sage-pale);
-  border: 1px solid var(--border-line);
-  padding: 6px 18px;
+  letter-spacing: 0.24em;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  padding: 7px 22px;
   border-radius: var(--radius-pill);
-  margin-bottom: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero-title-thiep {
   font-family: var(--font-serif);
-  font-size: 1.3rem;
+  font-size: clamp(1.2rem, 3.2vw, 1.6rem);
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: #f7eedc;
   margin-bottom: 8px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
 }
 
 .hero-names {
-  margin: 6px auto 18px;
+  margin: 8px auto 20px;
   width: 100%;
   max-width: 100%;
 }
@@ -493,8 +523,8 @@ button {
   display: block;
   font-family: var(--font-cursive);
   line-height: 1.2;
-  color: var(--sage-dark);
-  text-shadow: 0 2px 10px rgba(59, 73, 43, 0.08);
+  color: #ffffff;
+  text-shadow: 0 4px 22px rgba(0, 0, 0, 0.8), 0 2px 6px rgba(0, 0, 0, 0.6);
   white-space: nowrap !important;
   text-wrap: nowrap !important;
   overflow: visible;
@@ -513,115 +543,66 @@ button {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: clamp(1.8rem, 4vw, 2.6rem);
-  color: var(--gold);
+  color: #dfbf6c;
   margin: -4px 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
 }
 
-/* Arch Frame for Hero Photo */
-.hero-photo-wrapper {
-  position: relative;
-  width: min(380px, 86%);
-  margin: 24px auto 30px;
-}
-
-.hero-photo-arch {
-  position: relative;
-  aspect-ratio: 4 / 5.4;
-  border-radius: var(--radius-arch);
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
-  border: 4px solid #ffffff;
-  background: #ffffff;
-}
-
-.hero-photo-arch img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  transition: transform 0.6s ease;
-}
-
-.hero-photo-arch:hover img {
-  transform: scale(1.03);
-}
-
-.hero-frame-border {
-  position: absolute;
-  inset: -10px;
-  border-radius: 999px 999px 32px 32px;
-  border: 1.5px dashed var(--sage-medium);
-  opacity: 0.65;
-  pointer-events: none;
-}
-
-/* Botanical sprig badges on frame corners */
-.sprig-badge-left {
-  position: absolute;
-  top: -14px;
-  left: -14px;
-  width: 36px;
-  height: 52px;
-  background-color: var(--sage);
-  -webkit-mask: var(--sprig) center / contain no-repeat;
-  mask: var(--sprig) center / contain no-repeat;
-  transform: rotate(-25deg);
-  pointer-events: none;
-}
-
-.sprig-badge-right {
-  position: absolute;
-  bottom: -10px;
-  right: -12px;
-  width: 36px;
-  height: 52px;
-  background-color: var(--sage);
-  -webkit-mask: var(--sprig) center / contain no-repeat;
-  mask: var(--sprig) center / contain no-repeat;
-  transform: rotate(155deg);
-  pointer-events: none;
-}
-
-/* Hero Date & Countdown */
+/* Hero Date Badge */
 .hero-date-badge {
-  display: inline-block;
   font-family: var(--font-serif);
-  font-size: 1.25rem;
-  letter-spacing: 0.08em;
-  color: var(--ink);
-  margin-bottom: 6px;
+  font-size: clamp(1.05rem, 3.2vw, 1.35rem);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  padding: 8px 24px;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero-date-badge b {
-  color: var(--sage-dark);
+  color: #f7eedc;
   font-weight: 700;
 }
 
 .hero-lunar-date {
   font-size: 0.92rem;
-  color: var(--muted);
+  color: #e5ecd9;
   font-style: italic;
   margin-bottom: 24px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.65);
+}
+
+.hero-invite-action {
+  margin-top: 4px;
 }
 
 .hero-scroll-invite {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 28px;
-  background: var(--sage);
-  color: #ffffff;
+  padding: 13px 32px;
+  background: #ffffff;
+  color: var(--sage-dark);
   border-radius: var(--radius-pill);
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  box-shadow: 0 8px 24px rgba(79, 99, 58, 0.3);
-  transition: all 0.3s ease;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+  transition: all 0.25s ease;
 }
 
 .hero-scroll-invite:hover {
-  background: var(--sage-dark);
+  background: var(--sage-pale);
+  color: var(--sage);
   transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
 }
 
 /* ==========================================================================
@@ -688,23 +669,33 @@ button {
   transform: translateY(-4px);
 }
 
+.person-photo-circle,
 .person-photo-arch {
-  width: min(220px, 70%);
-  aspect-ratio: 4 / 5.2;
-  border-radius: var(--radius-arch);
+  width: min(190px, 62vw);
+  height: min(190px, 62vw);
+  aspect-ratio: 1 / 1;
+  border-radius: 50% !important;
   overflow: hidden;
-  border: 3px solid #ffffff;
-  box-shadow: var(--shadow-soft);
-  margin-bottom: 22px;
+  border: 4px solid #ffffff;
+  box-shadow: 0 12px 30px rgba(45, 59, 33, 0.16);
+  margin-bottom: 20px;
   background: var(--sage-pale);
   position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.person-photo-circle img,
 .person-photo-arch img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 20%;
+}
+
+.person-card:hover .person-photo-circle,
+.person-card:hover .person-photo-arch {
+  transform: scale(1.04);
+  box-shadow: 0 16px 36px rgba(45, 59, 33, 0.22);
 }
 
 .person-role {

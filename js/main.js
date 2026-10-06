@@ -459,7 +459,7 @@ async function initDynamicData() {
   if (data.bride) {
     const brideNameEl = document.querySelector("#couple .person-card:first-child .person-name");
     if (brideNameEl && data.bride.name) brideNameEl.innerText = data.bride.name;
-    const brideImgEl = document.querySelector("#couple .person-card:first-child .person-photo-arch img");
+    const brideImgEl = document.querySelector("#couple .person-card:first-child .person-photo-circle img, #couple .person-card:first-child .person-photo-arch img");
     if (brideImgEl && data.bride.photo) brideImgEl.src = data.bride.photo;
     const brideParentsEl = document.querySelector("#couple .person-card:first-child .parents-names");
     if (brideParentsEl) {
@@ -474,7 +474,7 @@ async function initDynamicData() {
   if (data.groom) {
     const groomNameEl = document.querySelector("#couple .person-card:last-child .person-name");
     if (groomNameEl && data.groom.name) groomNameEl.innerText = data.groom.name;
-    const groomImgEl = document.querySelector("#couple .person-card:last-child .person-photo-arch img");
+    const groomImgEl = document.querySelector("#couple .person-card:last-child .person-photo-circle img, #couple .person-card:last-child .person-photo-arch img");
     if (groomImgEl && data.groom.photo) groomImgEl.src = data.groom.photo;
     const groomParentsEl = document.querySelector("#couple .person-card:last-child .parents-names");
     if (groomParentsEl) {
@@ -496,9 +496,9 @@ async function initDynamicData() {
     const heroNamesEl = document.querySelector(".hero-names");
     if (heroNamesEl) {
       heroNamesEl.innerHTML = `
-        <span class="name">${escapeHtml(data.bride.name)}</span>
+        <span class="name name-bride">${escapeHtml(data.bride.name)}</span>
         <span class="amp">&amp;</span>
-        <span class="name">${escapeHtml(data.groom.name)}</span>
+        <span class="name name-groom">${escapeHtml(data.groom.name)}</span>
       `;
     }
     const footerNamesEl = document.querySelector(".footer-names");
@@ -511,7 +511,7 @@ async function initDynamicData() {
 
   // Cập nhật Ảnh Hero
   if (data.hero && data.hero.photo) {
-    const heroImgEl = document.querySelector(".hero-photo-arch img");
+    const heroImgEl = document.querySelector("#hero-banner-img, .hero-bg-media img, .hero-photo-arch img");
     if (heroImgEl) heroImgEl.src = data.hero.photo;
   }
 
@@ -519,7 +519,7 @@ async function initDynamicData() {
   if (data.ceremony) {
     const tagEl = document.querySelector(".hero-ceremony-tag");
     if (tagEl && data.ceremony.tag) {
-      tagEl.innerHTML = `<span class="sprig-icon" style="width:18px;height:24px;"></span> ${escapeHtml(data.ceremony.tag)} <span class="sprig-icon" style="width:18px;height:24px;transform:scaleX(-1);"></span>`;
+      tagEl.innerText = data.ceremony.tag;
     }
     const heroDateEl = document.querySelector(".hero-date-badge");
     if (heroDateEl && data.ceremony.dateDisplay) heroDateEl.innerHTML = escapeHtml(data.ceremony.dateDisplay);
