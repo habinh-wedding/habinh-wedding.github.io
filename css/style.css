@@ -424,25 +424,37 @@ button {
 }
 
 .hero-names {
-  margin: 6px 0 18px;
+  margin: 6px auto 18px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .hero-names .name {
   display: block;
   font-family: var(--font-cursive);
-  font-size: clamp(3.2rem, 9.5vw, 5.2rem);
-  line-height: 1.1;
+  line-height: 1.2;
   color: var(--sage-dark);
   text-shadow: 0 2px 10px rgba(59, 73, 43, 0.08);
+  white-space: nowrap !important;
+  text-wrap: nowrap !important;
+  overflow: visible;
+}
+
+.hero-names .name-bride {
+  font-size: clamp(2.2rem, 6.4vw, 4.2rem);
+}
+
+.hero-names .name-groom {
+  font-size: clamp(1.4rem, 4.4vw, 3.2rem);
 }
 
 .hero-names .amp {
   display: inline-block;
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-size: clamp(1.4rem, 3.6vw, 2.2rem);
   color: var(--gold);
-  margin: -6px 0;
+  margin: -4px 0;
 }
 
 /* Arch Frame for Hero Photo */
@@ -1420,8 +1432,12 @@ button {
     padding: 0 14px;
   }
 
-  .hero-names .name {
-    font-size: 3.4rem;
+  .hero-names .name-bride {
+    font-size: clamp(1.9rem, 7.5vw, 2.7rem);
+  }
+
+  .hero-names .name-groom {
+    font-size: clamp(1.25rem, 4.9vw, 1.9rem);
   }
 
   .person-card {

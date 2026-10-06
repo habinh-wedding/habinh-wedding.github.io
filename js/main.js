@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initLightbox();
   initRSVP();
   initCalendarButton();
+  fitHeroNames();
+  window.addEventListener("resize", fitHeroNames);
 });
 
 
@@ -578,5 +580,29 @@ async function initDynamicData() {
       initLightbox();
     }
   }
+
+  // Tự động căn chỉnh tên chú rể trên một hàng
+  setTimeout(fitHeroNames, 100);
 }
+
+/* ==========================================================================
+   9. TỰ ĐỘNG CĂN CHỈNH TÊN CHÚ RỂ VÀ CÔ DÂU TRÊN 1 HÀNG
+   ========================================================================== */
+function fitHeroNames() {
+  const names = document.querySelectorAll(".hero-names .name");
+  names.forEach(el => {
+    el.style.whiteSpace = "nowrap";
+    const parent = el.parentElement;
+    if (!parent) return;
+    const maxWidth = parent.clientWidth || (window.innerWidth - 32);
+    let size = parseFloat(window.getComputedStyle(el).fontSize);
+    let iterations = 0;
+    while (el.scrollWidth > maxWidth && size > 14 && iterations < 30) {
+      size -= 1;
+      el.style.fontSize = size + "px";
+      iterations++;
+    }
+  });
+}
+
 
