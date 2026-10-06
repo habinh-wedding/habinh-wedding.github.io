@@ -427,18 +427,20 @@ button {
 }
 
 /* ==========================================================================
-   HERO / BANNER SECTION
+/* ==========================================================================
+   HERO / FULLSCREEN BANNER SECTION (CHỮ NỔI TRỰC TIẾP TRÊN ẢNH CHÍNH)
    ========================================================================== */
 .hero-section {
   position: relative;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: center;
   overflow: hidden;
-  padding: 100px 20px 60px;
+  padding: 0;
+  background: #1a2216 url('../img/hero-banner.jpg') center 25% / cover no-repeat;
 }
 
 .hero-bg-media {
@@ -448,13 +450,14 @@ button {
   height: 100%;
   z-index: 0;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .hero-bg-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center 25%;
   transform: scale(1.02);
   transition: transform 8s ease-out;
 }
@@ -464,22 +467,52 @@ button {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(16, 23, 13, 0.58) 0%,
-    rgba(16, 23, 13, 0.35) 45%,
-    rgba(16, 23, 13, 0.82) 100%
+    rgba(14, 20, 10, 0.72) 0%,
+    rgba(14, 20, 10, 0.38) 22%,
+    rgba(14, 20, 10, 0.08) 38%,
+    rgba(14, 20, 10, 0.08) 58%,
+    rgba(14, 20, 10, 0.52) 76%,
+    rgba(14, 20, 10, 0.88) 100%
   );
   z-index: 1;
+  pointer-events: none;
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 760px;
+  width: 100%;
+  max-width: 900px;
   margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 72px) 20px calc(env(safe-area-inset-bottom, 0px) + 32px);
+  box-sizing: border-box;
+}
+
+.hero-top-block {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+}
+
+.hero-face-clearance {
+  flex: 1;
+  min-height: 110px;
+  width: 100%;
+  pointer-events: none;
+}
+
+.hero-bottom-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero-ceremony-tag {
@@ -491,30 +524,30 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.24em;
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  padding: 7px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 6px 20px;
   border-radius: var(--radius-pill);
-  margin-bottom: 16px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 .hero-title-thiep {
   font-family: var(--font-serif);
-  font-size: clamp(1.2rem, 3.2vw, 1.6rem);
+  font-size: clamp(1.15rem, 3.2vw, 1.55rem);
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #f7eedc;
-  margin-bottom: 8px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  margin-bottom: 6px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
 .hero-names {
-  margin: 8px auto 20px;
+  margin: 6px auto 10px;
   width: 100%;
   max-width: 100%;
 }
@@ -524,45 +557,45 @@ button {
   font-family: var(--font-cursive);
   line-height: 1.2;
   color: #ffffff;
-  text-shadow: 0 4px 22px rgba(0, 0, 0, 0.8), 0 2px 6px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 4px 22px rgba(0, 0, 0, 0.85), 0 2px 6px rgba(0, 0, 0, 0.7);
   white-space: nowrap !important;
   text-wrap: nowrap !important;
   overflow: visible;
 }
 
 .hero-names .name-bride {
-  font-size: clamp(3.0rem, 7.2vw, 4.8rem);
+  font-size: clamp(2.8rem, 6.8vw, 4.6rem);
 }
 
 .hero-names .name-groom {
-  font-size: clamp(2.4rem, 5.6vw, 4.0rem);
+  font-size: clamp(2.3rem, 5.4vw, 3.8rem);
 }
 
 .hero-names .amp {
   display: inline-block;
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
-  color: #dfbf6c;
+  font-size: clamp(1.6rem, 3.8vw, 2.4rem);
+  color: #e5cd86;
   margin: -4px 0;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
 }
 
 /* Hero Date Badge */
 .hero-date-badge {
   font-family: var(--font-serif);
-  font-size: clamp(1.05rem, 3.2vw, 1.35rem);
+  font-size: clamp(1.0rem, 3.0vw, 1.3rem);
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  padding: 8px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 8px 22px;
   border-radius: var(--radius-pill);
   display: inline-block;
   margin-bottom: 8px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 .hero-date-badge b {
@@ -571,11 +604,11 @@ button {
 }
 
 .hero-lunar-date {
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   color: #e5ecd9;
   font-style: italic;
-  margin-bottom: 24px;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.65);
+  margin-bottom: 20px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.75);
 }
 
 .hero-invite-action {
@@ -586,11 +619,11 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 13px 32px;
+  padding: 12px 28px;
   background: #ffffff;
   color: var(--sage-dark);
   border-radius: var(--radius-pill);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-decoration: none;
