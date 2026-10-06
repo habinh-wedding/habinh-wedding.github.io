@@ -459,7 +459,7 @@ async function initDynamicData() {
   if (data.bride) {
     const brideNameEl = document.querySelector("#couple .person-card:first-child .person-name");
     if (brideNameEl && data.bride.name) brideNameEl.innerText = data.bride.name;
-    const brideImgEl = document.querySelector("#couple .person-card:first-child .person-photo-circle img, #couple .person-card:first-child .person-photo-arch img");
+    const brideImgEl = document.querySelector("#couple .person-card:first-child .person-photo-frame img, #couple .person-card:first-child .person-photo-circle img, #couple .person-card:first-child .person-photo-arch img");
     if (brideImgEl && data.bride.photo) brideImgEl.src = data.bride.photo;
     const brideParentsEl = document.querySelector("#couple .person-card:first-child .parents-names");
     if (brideParentsEl) {
@@ -474,7 +474,7 @@ async function initDynamicData() {
   if (data.groom) {
     const groomNameEl = document.querySelector("#couple .person-card:last-child .person-name");
     if (groomNameEl && data.groom.name) groomNameEl.innerText = data.groom.name;
-    const groomImgEl = document.querySelector("#couple .person-card:last-child .person-photo-circle img, #couple .person-card:last-child .person-photo-arch img");
+    const groomImgEl = document.querySelector("#couple .person-card:last-child .person-photo-frame img, #couple .person-card:last-child .person-photo-circle img, #couple .person-card:last-child .person-photo-arch img");
     if (groomImgEl && data.groom.photo) groomImgEl.src = data.groom.photo;
     const groomParentsEl = document.querySelector("#couple .person-card:last-child .parents-names");
     if (groomParentsEl) {
