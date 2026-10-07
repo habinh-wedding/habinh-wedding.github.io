@@ -607,19 +607,18 @@ function fitHeroNames() {
         connector.style.whiteSpace = "nowrap";
       }
 
-      const parent = container.parentElement;
-      const maxWidth = (parent ? parent.clientWidth : window.innerWidth) - 24;
+      const availableWidth = Math.min(window.innerWidth - 24, 1050);
 
       let size = parseFloat(window.getComputedStyle(names[0]).fontSize);
       let iterations = 0;
 
-      // Thu nhỏ cỡ chữ nhịp nhàng nếu toàn bộ dòng vượt quá chiều rộng cho phép
-      while (container.scrollWidth > maxWidth && size > 13 && iterations < 35) {
+      // Chỉ thu nhỏ nếu kích thước thực tế của dòng chữ vượt quá chiều rộng màn hình
+      while (container.scrollWidth > availableWidth && size > 15 && iterations < 35) {
         size -= 0.5;
         names[0].style.fontSize = size + "px";
         names[1].style.fontSize = size + "px";
         if (connector) {
-          connector.style.fontSize = Math.max(12, size * 0.58) + "px";
+          connector.style.fontSize = Math.max(13, size * 0.58) + "px";
         }
         iterations++;
       }
