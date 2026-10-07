@@ -489,9 +489,7 @@ async function initDynamicData() {
   if (data.bride && data.groom) {
     const brandEl = document.querySelector(".wd-brand");
     if (brandEl) {
-      const bShort = data.bride.name.split(" ").pop();
-      const gShort = data.groom.name.split(" ").pop();
-      brandEl.innerHTML = `<span>${escapeHtml(bShort)}</span><i>♡</i><span>${escapeHtml(gShort)}</span>`;
+      brandEl.innerHTML = `<span>THIỆP MỪNG BÁO HỶ</span>`;
     }
     const heroNamesEl = document.querySelector(".hero-names");
     if (heroNamesEl) {
