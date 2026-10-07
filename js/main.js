@@ -496,9 +496,9 @@ async function initDynamicData() {
     const heroNamesEl = document.querySelector(".hero-names");
     if (heroNamesEl) {
       heroNamesEl.innerHTML = `
-        <span class="name name-bride">${escapeHtml(data.bride.name)}</span>
-        <span class="amp">&amp;</span>
-        <span class="name name-groom">${escapeHtml(data.groom.name)}</span>
+        <span class="name">Thu Hà</span>
+        <span class="hero-connector">nên duyên với</span>
+        <span class="name">Thiên Bình</span>
       `;
     }
     const footerNamesEl = document.querySelector(".footer-names");
@@ -592,26 +592,27 @@ async function initDynamicData() {
    9. TỰ ĐỘNG CĂN CHỈNH TÊN CHÚ RỂ VÀ CÔ DÂU TRÊN 1 HÀNG
    ========================================================================== */
 function fitHeroNames() {
-  // 1. Hero banner names (Kiều Thu Hà & Nguyễn Hoàng Thiên Bình)
+  // 1. Hero banner names (Thu Hà nên duyên với Thiên Bình - cùng cỡ chữ)
   const heroNames = document.querySelectorAll(".hero-names .name");
-  heroNames.forEach(el => {
-    // Reset font-size inline về rỗng để ăn theo CSS clamp chuẩn trước
-    el.style.fontSize = "";
-    el.style.whiteSpace = "nowrap";
+  if (heroNames.length >= 2) {
+    heroNames.forEach(el => {
+      el.style.fontSize = "";
+      el.style.whiteSpace = "nowrap";
+    });
 
-    const parent = el.parentElement;
-    if (!parent) return;
-    const maxWidth = Math.min(parent.clientWidth || window.innerWidth, window.innerWidth - 24);
-    let size = parseFloat(window.getComputedStyle(el).fontSize);
+    const parent = heroNames[0].parentElement;
+    const maxWidth = parent ? Math.min(parent.clientWidth || window.innerWidth, window.innerWidth - 24) : window.innerWidth - 24;
+    let size = parseFloat(window.getComputedStyle(heroNames[0]).fontSize);
 
-    // Chỉ co nhẹ nếu tràn viền thực tế, giữ chữ luôn to đẹp (sàn 26px)
     let iterations = 0;
-    while (el.scrollWidth > maxWidth && size > 26 && iterations < 20) {
+    while ((heroNames[0].scrollWidth > maxWidth || heroNames[1].scrollWidth > maxWidth) && size > 26 && iterations < 20) {
       size -= 0.5;
-      el.style.fontSize = size + "px";
       iterations++;
     }
-  });
+    // Đảm bảo cả hai tên luôn có CÙNG CỠ CHỮ chính xác
+    heroNames[0].style.fontSize = size + "px";
+    heroNames[1].style.fontSize = size + "px";
+  }
 
   // 2. Couple section card names (Cô Dâu & Chú Rể)
   const personNames = document.querySelectorAll(".person-card .person-name");
