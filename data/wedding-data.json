@@ -14,21 +14,21 @@
     "mother": "Phùng Thiên Hương"
   },
   "ceremony": {
-    "tag": "Lễ Vu Quy",
-    "title": "LỄ VU QUY",
-    "subtitle": "Tiệc Mừng Tổ Chức Tại Nhà Gái",
-    "datetime": "2026-11-28T09:00:00+07:00",
-    "dateDisplay": "Thứ Bảy, 28 tháng 11 năm 2026",
-    "timeDisplay": "09:00 · Thứ Bảy, 28/11/2026",
-    "lunarDate": "20 tháng 10 năm Bính Ngọ",
+    "tag": "Tiệc Mừng Nhà Gái",
+    "title": "TIỆC MỪNG ĐƯỢC TỔ CHỨC TẠI NHÀ GÁI",
+    "subtitle": "",
+    "datetime": "2026-11-27T09:00:00+07:00",
+    "dateDisplay": "Thứ Sáu, 27 tháng 11 năm 2026",
+    "timeDisplay": "09:00 · Thứ Sáu, 27/11/2026",
+    "lunarDate": "19 tháng 10 năm Bính Ngọ",
     "venueName": "TƯ GIA NHÀ GÁI",
     "venueAddress": "Thôn Trung Hưng, xã Hợp Thịnh, thành phố Bắc Ninh",
     "mapUrl": "https://maps.app.goo.gl/4cpB2ekW9P5ouQrS6",
     "mapEmbedCoords": "21.3123181,105.9177815"
   },
   "hero": {
-    "tag": "Lễ Vu Quy",
-    "heading": "Thiệp Mừng Báo Hỷ",
+    "tag": "Tiệc Mừng Nhà Gái",
+    "heading": "",
     "photo": "img/hero-banner.jpg"
   },
   "quote": {

@@ -5,7 +5,8 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  initFallingPetals();
+  // Bỏ hiệu ứng hoa rơi theo yêu cầu
+  // initFallingPetals();
   initDynamicData();
   initCountdown();
   initAudioPlayer();
@@ -13,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initLightbox();
   initRSVP();
   initCalendarButton();
+  initGiftCopy();
   fitHeroNames();
   window.addEventListener("resize", fitHeroNames);
   if (document.fonts) {
@@ -85,7 +87,7 @@ function initCountdown() {
   if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
   function update() {
-    const targetDate = window.TARGET_WEDDING_DATETIME || new Date("2026-11-28T09:00:00+07:00").getTime();
+    const targetDate = window.TARGET_WEDDING_DATETIME || new Date("2026-11-27T09:00:00+07:00").getTime();
     const now = new Date().getTime();
     const distance = targetDate - now;
 
@@ -419,12 +421,12 @@ function initCalendarButton() {
   if (!btn) return;
 
   btn.addEventListener("click", () => {
-    // Sự kiện 09:00 - 12:00 ngày 28/11/2026 (GMT+7)
-    // UTC: 20261128T020000Z đến 20261128T050000Z
-    const title = encodeURIComponent("Lễ Vu Quy: Kiều Thu Hà & Nguyễn Hoàng Thiên Bình");
-    const details = encodeURIComponent("Lễ Vu Quy và Tiệc Mừng tại Nhà Gái. Rất hân hạnh được đón tiếp!");
+    // Sự kiện 09:00 - 12:00 ngày 27/11/2026 (GMT+7)
+    // UTC: 20261127T020000Z đến 20261127T050000Z
+    const title = encodeURIComponent("Tiệc Mừng Nhà Gái: Kiều Thu Hà & Nguyễn Hoàng Thiên Bình");
+    const details = encodeURIComponent("Tiệc Mừng được tổ chức tại Nhà Gái. Rất hân hạnh được đón tiếp quý khách!");
     const location = encodeURIComponent("Thôn Trung Hưng, xã Hợp Thịnh, thành phố Bắc Ninh");
-    const dates = "20261128T020000Z/20261128T050000Z";
+    const dates = "20261127T020000Z/20261127T050000Z";
 
     const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
 
@@ -635,5 +637,49 @@ function fitHeroNames() {
     }
   });
 }
+
+/* ==========================================================================
+   10. SAO CHÉP SỐ TÀI KHOẢN MỪNG CƯỚI ONLINE
+   ========================================================================== */
+function initGiftCopy() {
+  const btn = document.getElementById("copy-acc-btn");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    const accNumber = "109868921952";
+    navigator.clipboard.writeText(accNumber).then(() => {
+      const originalHtml = btn.innerHTML;
+      btn.innerHTML = `
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>Đã sao chép số tài khoản!</span>
+      `;
+      btn.classList.add("copied");
+
+      setTimeout(() => {
+        btn.innerHTML = originalHtml;
+        btn.classList.remove("copied");
+      }, 3000);
+    }).catch(err => {
+      // Fallback nếu clipboard API bị hạn chế
+      const dummy = document.createElement("input");
+      document.body.appendChild(dummy);
+      dummy.value = accNumber;
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+
+      btn.classList.add("copied");
+      const originalHtml = btn.innerHTML;
+      btn.innerHTML = `<span>Đã sao chép: 109868921952</span>`;
+      setTimeout(() => {
+        btn.innerHTML = originalHtml;
+        btn.classList.remove("copied");
+      }, 3000);
+    });
+  });
+}
+
 
 
