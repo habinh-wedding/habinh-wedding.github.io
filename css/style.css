@@ -908,19 +908,21 @@ button {
 
 .ceremony-main-title {
   font-family: var(--font-serif);
-  font-size: clamp(2.2rem, 5.5vw, 3.2rem);
+  font-size: clamp(1.8rem, 4.2vw, 2.8rem);
   color: var(--sage-dark);
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   margin-bottom: 6px;
+  line-height: 1.25;
 }
 
 .ceremony-sub {
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2.0vw, 1.05rem);
   color: var(--muted);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
+  font-weight: 500;
 }
 
 /* Calendar Component */
@@ -1577,7 +1579,25 @@ button {
   }
 
   .event-container-card {
-    padding: 42px 14px 34px;
+    padding: 48px 16px 34px;
+    border-radius: 120px 120px 24px 24px;
+  }
+
+  .event-container-card::before {
+    border-radius: 110px 110px 18px 18px;
+    inset: 8px;
+  }
+
+  .ceremony-main-title {
+    font-size: clamp(1.45rem, 5.8vw, 1.95rem);
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+
+  .ceremony-sub {
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 22px;
   }
 
   .countdown-item {
