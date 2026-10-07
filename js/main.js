@@ -496,9 +496,9 @@ async function initDynamicData() {
     const heroNamesEl = document.querySelector(".hero-names");
     if (heroNamesEl) {
       heroNamesEl.innerHTML = `
-        <span class="name">Thu Hà</span>
+        <span class="name">THU HÀ</span>
         <span class="hero-connector">nên duyên với</span>
-        <span class="name">Thiên Bình</span>
+        <span class="name">THIÊN BÌNH</span>
       `;
     }
     const footerNamesEl = document.querySelector(".footer-names");
