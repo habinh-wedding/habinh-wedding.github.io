@@ -117,6 +117,8 @@ function initCountdown() {
 /* ==========================================================================
    3. TRÌNH PHÁT NHẠC NỀN (BEAUTIFUL IN WHITE)
    ========================================================================== */
+window.currentMusicTitle = "Mối Duyên Vàng";
+
 function initAudioPlayer() {
   const audio = document.getElementById("bg-music");
   const playBtn = document.getElementById("music-toggle-btn");
@@ -127,11 +129,20 @@ function initAudioPlayer() {
   let isPlaying = false;
   let hasInteracted = false;
 
+  window.updateMusicDisplay = function() {
+    if (!tooltip) return;
+    if (isPlaying) {
+      tooltip.innerText = `Đang phát: ${window.currentMusicTitle || "Mối Duyên Vàng"} ♫`;
+    } else {
+      tooltip.innerText = `Chạm để nghe: ${window.currentMusicTitle || "Mối Duyên Vàng"} ♫`;
+    }
+  };
+
   function playAudio() {
     audio.play().then(() => {
       isPlaying = true;
       playBtn.classList.add("spinning");
-      if (tooltip) tooltip.innerText = "Đang phát: Beautiful in White ♫";
+      if (tooltip) tooltip.innerText = `Đang phát: ${window.currentMusicTitle || "Mối Duyên Vàng"} ♫`;
     }).catch(err => {
       console.log("Autoplay waiting for user gesture:", err);
     });
@@ -559,14 +570,26 @@ async function initDynamicData() {
   }
 
   // Cập nhật Nhạc
-  if (data.music && data.music.url) {
-    const audioEl = document.getElementById("bg-music");
-    if (audioEl) {
-      audioEl.src = data.music.url;
+  if (data.music) {
+    if (data.music.title) {
+      window.currentMusicTitle = data.music.title.replace(/\.[^/.]+$/, "");
     }
-    const tipEl = document.getElementById("music-tooltip");
-    if (tipEl && data.music.title) {
-      tipEl.innerText = `Chạm để nghe: ${data.music.title} ♫`;
+    if (data.music.url) {
+      const audioEl = document.getElementById("bg-music");
+      if (audioEl) {
+        const currentSrc = audioEl.currentSrc || audioEl.src;
+        if (!currentSrc.includes(data.music.url)) {
+          const wasPlaying = !audioEl.paused;
+          audioEl.src = data.music.url;
+          audioEl.load();
+          if (wasPlaying) {
+            audioEl.play().catch(e => console.log("Play interrupted:", e));
+          }
+        }
+      }
+    }
+    if (typeof window.updateMusicDisplay === "function") {
+      window.updateMusicDisplay();
     }
   }
 

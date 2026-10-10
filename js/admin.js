@@ -289,13 +289,36 @@ function setupHandlers() {
     });
   }
 
+  // Chọn nhanh bài hát có sẵn
+  const presetMusicBtns = document.querySelectorAll(".btn-preset-music");
+  presetMusicBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const title = btn.getAttribute("data-title");
+      const url = btn.getAttribute("data-url");
+      setVal("music-title", title);
+      setVal("music-url", url);
+      if (weddingData) {
+        weddingData.music = { title, url };
+      }
+      showToast(`Đã chọn bài: ${title}`);
+    });
+  });
+
   // Nút Lưu thay đổi (Local preview)
   const btnSaveLocal = document.getElementById("btn-save-local");
   if (btnSaveLocal) {
     btnSaveLocal.addEventListener("click", () => {
       collectFormData();
-      localStorage.setItem("admin_wedding_data", JSON.stringify(weddingData));
-      showToast("Đã lưu dữ liệu vào trình duyệt thành công!");
+      try {
+        localStorage.setItem("admin_wedding_data", JSON.stringify(weddingData));
+        showToast("Đã lưu dữ liệu vào trình duyệt thành công!");
+      } catch (err) {
+        console.warn("Lỗi lưu localStorage:", err);
+        alert(
+          "⚠️ Dữ liệu quá lớn để lưu tạm vào trình duyệt (do dung lượng bài hát MP3 vượt mức 5MB)!\n\n" +
+          "💡 Giải pháp: Hãy bấm '🚀 Xuất bản lên GitHub' hoặc chọn bài hát có sẵn/link MP3 trực tuyến."
+        );
+      }
     });
   }
 
