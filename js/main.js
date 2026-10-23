@@ -313,8 +313,30 @@ function initRSVP() {
   const alertEl = document.getElementById("rsvp-alert");
   const wishesList = document.getElementById("wishes-list");
 
+  const isGroomPage = document.body && document.body.dataset.page === "groom";
+  const storageKey = isGroomPage ? "wedding_wishes_groom_tb" : "wedding_wishes_th_tb";
+
   // Dữ liệu lời chúc mẫu ban đầu
-  const initialWishes = [
+  const initialWishes = isGroomPage ? [
+    {
+      name: "Hội Bạn Thân",
+      role: "Chiến hữu",
+      message: "Chúc mừng người anh em Thiên Bình đã chính thức đón được nàng dâu xinh đẹp Kiều Thu Hà về dinh! Chúc hai vợ chồng trăm năm hạnh phúc, sớm sinh quý tử nhé!",
+      time: "Hôm nay"
+    },
+    {
+      name: "Gia đình Bác Hùng",
+      role: "Họ hàng nhà trai",
+      message: "Mừng ngày thành hôn của cháu Bình. Chúc chú rể luôn là bờ vai vững chãi, hai cháu yêu thương hòa thuận, bách niên giai lão!",
+      time: "Hôm qua"
+    },
+    {
+      name: "Team Đồng Nghiệp",
+      role: "Đồng nghiệp chú rể",
+      message: "Chúc mừng anh Bình rước nàng về dinh thành công rực rỡ! Chúc tổ ấm nhỏ luôn tràn ngập tiếng cười, sự nghiệp ngày càng thăng hoa!",
+      time: "2 ngày trước"
+    }
+  ] : [
     {
       name: "Bạn thân Thu Hà",
       role: "Bạn cô dâu",
@@ -338,12 +360,12 @@ function initRSVP() {
   // Lấy dữ liệu từ localStorage hoặc dùng mẫu
   let savedWishes = [];
   try {
-    const raw = localStorage.getItem("wedding_wishes_th_tb");
+    const raw = localStorage.getItem(storageKey);
     if (raw) {
       savedWishes = JSON.parse(raw);
     } else {
       savedWishes = initialWishes;
-      localStorage.setItem("wedding_wishes_th_tb", JSON.stringify(savedWishes));
+      localStorage.setItem(storageKey, JSON.stringify(savedWishes));
     }
   } catch (e) {
     savedWishes = initialWishes;
@@ -393,7 +415,7 @@ function initRSVP() {
           time: "Vừa xong"
         });
         try {
-          localStorage.setItem("wedding_wishes_th_tb", JSON.stringify(savedWishes));
+          localStorage.setItem(storageKey, JSON.stringify(savedWishes));
         } catch (err) {}
         renderWishes();
       }
@@ -401,7 +423,10 @@ function initRSVP() {
       // Hiển thị thông báo thành công
       if (alertEl) {
         alertEl.style.display = "block";
-        alertEl.innerText = `Cảm ơn ${name} đã gửi lời chúc và xác nhận tham dự cùng gia đình! ❤️`;
+        const thankText = isGroomPage
+          ? `Cảm ơn ${name} đã gửi lời chúc mừng đến chú rể Thiên Bình và gia đình! ❤️`
+          : `Cảm ơn ${name} đã gửi lời chúc và xác nhận tham dự cùng gia đình! ❤️`;
+        alertEl.innerText = thankText;
         setTimeout(() => {
           alertEl.style.display = "none";
         }, 5000);
