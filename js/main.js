@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initRSVP();
   initCalendarButton();
   initGiftCopy();
+  initGiftTabs();
   fitHeroNames();
   window.addEventListener("resize", fitHeroNames);
   if (document.fonts) {
@@ -432,12 +433,10 @@ function initCalendarButton() {
   if (!btn) return;
 
   btn.addEventListener("click", () => {
-    // Sự kiện 09:00 - 12:00 ngày 27/11/2026 (GMT+7)
-    // UTC: 20261127T020000Z đến 20261127T050000Z
-    const title = encodeURIComponent("Tiệc Mừng Nhà Gái: Kiều Thu Hà & Nguyễn Hoàng Thiên Bình");
-    const details = encodeURIComponent("Tiệc Mừng được tổ chức tại Nhà Gái. Rất hân hạnh được đón tiếp quý khách!");
-    const location = encodeURIComponent("Thôn Trung Hưng, xã Hợp Thịnh, thành phố Bắc Ninh");
-    const dates = "20261127T020000Z/20261127T050000Z";
+    const title = encodeURIComponent(btn.getAttribute("data-title") || "Tiệc Mừng Nhà Gái: Kiều Thu Hà & Nguyễn Hoàng Thiên Bình");
+    const details = encodeURIComponent(btn.getAttribute("data-details") || "Tiệc Mừng được tổ chức tại Nhà Gái. Rất hân hạnh được đón tiếp quý khách!");
+    const location = encodeURIComponent(btn.getAttribute("data-location") || "Thôn Trung Hưng, xã Hợp Thịnh, thành phố Bắc Ninh");
+    const dates = btn.getAttribute("data-dates") || "20261127T020000Z/20261127T050000Z";
 
     const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
 
@@ -449,6 +448,11 @@ function initCalendarButton() {
    8. TỰ ĐỘNG NẠP DỮ LIỆU ĐỘNG TỪ ADMIN / DATA JSON
    ========================================================================== */
 async function initDynamicData() {
+  // Nếu là trang nhà trai (data-page="groom"), không ghi đè dữ liệu của nhà gái
+  if (document.body && document.body.dataset.page === "groom") {
+    return;
+  }
+
   let data = null;
   const localSaved = localStorage.getItem("admin_wedding_data");
   if (localSaved) {
@@ -676,44 +680,69 @@ function fitHeroNames() {
    10. SAO CHÉP SỐ TÀI KHOẢN MỪNG CƯỚI ONLINE
    ========================================================================== */
 function initGiftCopy() {
-  const btn = document.getElementById("copy-acc-btn");
-  if (!btn) return;
+  const copyBtns = document.querySelectorAll(".btn-copy-acc");
+  if (!copyBtns.length) return;
 
-  btn.addEventListener("click", () => {
-    const accNumber = "109868921952";
-    navigator.clipboard.writeText(accNumber).then(() => {
-      const originalHtml = btn.innerHTML;
-      btn.innerHTML = `
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="20 6 9 17 4 12"></polyline>
-        </svg>
-        <span>Đã sao chép số tài khoản!</span>
-      `;
-      btn.classList.add("copied");
+  copyBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.getAttribute("data-target") || "acc-number-text";
+      const targetEl = document.getElementById(targetId);
+      const accNumber = targetEl ? targetEl.innerText.trim().replace(/\s+/g, '') : (btn.getAttribute("data-acc") || "109868921952");
 
-      setTimeout(() => {
-        btn.innerHTML = originalHtml;
-        btn.classList.remove("copied");
-      }, 3000);
-    }).catch(err => {
-      // Fallback nếu clipboard API bị hạn chế
-      const dummy = document.createElement("input");
-      document.body.appendChild(dummy);
-      dummy.value = accNumber;
-      dummy.select();
-      document.execCommand("copy");
-      document.body.removeChild(dummy);
+      navigator.clipboard.writeText(accNumber).then(() => {
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Đã sao chép số tài khoản!</span>
+        `;
+        btn.classList.add("copied");
 
-      btn.classList.add("copied");
-      const originalHtml = btn.innerHTML;
-      btn.innerHTML = `<span>Đã sao chép: 109868921952</span>`;
-      setTimeout(() => {
-        btn.innerHTML = originalHtml;
-        btn.classList.remove("copied");
-      }, 3000);
+        setTimeout(() => {
+          btn.innerHTML = originalHtml;
+          btn.classList.remove("copied");
+        }, 3000);
+      }).catch(err => {
+        const dummy = document.createElement("input");
+        document.body.appendChild(dummy);
+        dummy.value = accNumber;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+
+        btn.classList.add("copied");
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = `<span>Đã sao chép: ${accNumber}</span>`;
+        setTimeout(() => {
+          btn.innerHTML = originalHtml;
+          btn.classList.remove("copied");
+        }, 3000);
+      });
     });
   });
 }
+
+/* ==========================================================================
+   11. CHUYỂN ĐỔI TAB MỪNG CƯỚI (CHÚ RỂ & CÔ DÂU)
+   ========================================================================== */
+function initGiftTabs() {
+  const tabBtns = document.querySelectorAll(".gift-tab-btn");
+  if (!tabBtns.length) return;
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      tabBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const targetId = btn.getAttribute("data-target");
+      document.querySelectorAll(".gift-tab-content").forEach(c => c.classList.remove("active"));
+      const targetContent = document.getElementById(targetId);
+      if (targetContent) targetContent.classList.add("active");
+    });
+  });
+}
+
 
 
 
