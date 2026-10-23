@@ -493,7 +493,7 @@ body.has-floral-effects .wish-card::after {
   text-align: center;
   overflow: hidden;
   padding: 0;
-  background: #3e4d3a;
+  background: #1a2216 url('../img/hero-banner.jpg') center top / cover no-repeat;
 }
 
 .hero-bg-media {
@@ -1606,7 +1606,7 @@ body.has-floral-effects .wish-card::after {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 8%;
+    object-position: center top;
     transform: none;
     transition: none;
   }

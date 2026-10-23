@@ -488,11 +488,18 @@ function initCalendarButton() {
    8. TỰ ĐỘNG NẠP DỮ LIỆU ĐỘNG TỪ ADMIN / DATA JSON
    ========================================================================== */
 async function initDynamicData() {
-  const isBinhHaPage = window.location.pathname.includes("binhha.html") || 
+  // Dọn dẹp cache không phù hợp nếu từng lưu từ trước
+  try {
+    localStorage.removeItem("binhha_admin_main_data");
+    localStorage.removeItem("binhha_admin_binhha_data");
+  } catch (e) {}
+
+  const isBinhHaPage = (document.body && document.body.dataset.page === "groom") ||
+                       window.location.pathname.includes("binhha.html") || 
                        window.location.pathname.includes("/binhha/") ||
                        window.location.pathname.endsWith("/binhha");
-  const storageKey = isBinhHaPage ? "binhha_admin_binhha_data" : "binhha_admin_main_data";
-  const jsonPath = isBinhHaPage ? `data/binhha-data.json?v=${Date.now()}` : `data/main-data.json?v=${Date.now()}`;
+  const storageKey = isBinhHaPage ? "binhha_admin_binhha_data" : "admin_wedding_data";
+  const jsonPath = isBinhHaPage ? `data/binhha-data.json?v=${Date.now()}` : `data/wedding-data.json?v=${Date.now()}`;
 
   let data = null;
   const localSaved = localStorage.getItem(storageKey);
@@ -544,7 +551,7 @@ async function initDynamicData() {
     }
   }
 
-  // Cập nhật Ảnh Hero nếu admin đổi
+  // Cập nhật Ảnh Hero (Ảnh hero banner cũ của cô dâu: img/hero-banner.jpg)
   if (data.hero && data.hero.photo) {
     const heroImgEl = document.querySelector("#hero-banner-img");
     if (heroImgEl) heroImgEl.src = data.hero.photo;
@@ -568,9 +575,9 @@ async function initDynamicData() {
     if (footerCopy) footerCopy.innerText = data.footer.thanks;
   }
 
-  // Cập nhật STK (cho trang chính)
+  // Cập nhật STK & QR Code (Cô dâu: img/QRcode.jpeg)
   if (data.gift && data.gift.enabled !== false) {
-    const accNumberEl = document.getElementById("acc-groom-text");
+    const accNumberEl = document.getElementById("acc-number-text") || document.getElementById("acc-groom-text");
     if (accNumberEl && data.gift.accountNumber) accNumberEl.innerText = data.gift.accountNumber;
 
     const copyBtn = document.querySelector(".btn-copy-acc");

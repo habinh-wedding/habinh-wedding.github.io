@@ -2,24 +2,24 @@
   "bride": {
     "name": "Kiều Thu Hà",
     "role": "Cô Dâu",
-    "photo": "https://habinh-wedding.github.io/img/bride.jpg",
+    "photo": "img/bride.jpg",
     "father": "Kiều Hưng",
     "mother": "Triệu Thị Chinh"
   },
   "groom": {
     "name": "Nguyễn Hoàng Thiên Bình",
     "role": "Chú Rể",
-    "photo": "https://habinh-wedding.github.io/img/groom.jpg",
+    "photo": "img/groom.jpg",
     "father": "Nguyễn Duy Hiển",
     "mother": "Phùng Thiên Hương"
   },
   "ceremony": {
-    "tag": "Tiệc Mừng Nhà Gái",
-    "title": "TIỆC MỪNG",
+    "tag": "Tiệc Mừng Thân Mật",
+    "title": "TIỆC MỪNG THÂN MẬT",
     "subtitle": "Được Tổ Chức Tại Nhà Gái",
-    "datetime": "2026-11-27T10:00:00.000Z",
+    "datetime": "2026-11-27T09:00:00+07:00",
     "dateDisplay": "Thứ Sáu, 27 Tháng 11 Năm 2026",
-    "timeDisplay": "17:00 · Thứ Sáu, 27/11/2026",
+    "timeDisplay": "09:00 · Thứ Sáu, 27/11/2026",
     "lunarDate": "19 tháng 10 năm Bính Ngọ",
     "venueName": "TƯ GIA NHÀ GÁI",
     "venueAddress": "Thôn Trung Hưng, xã Hợp Thịnh, thành phố Bắc Ninh",
@@ -27,13 +27,22 @@
     "mapEmbedCoords": "21.3123181,105.9177815"
   },
   "hero": {
-    "tag": "Tiệc Mừng Nhà Gái",
+    "tag": "Tiệc Mừng Thân Mật",
     "heading": "Thiệp Mừng Báo Hỷ",
-    "photo": "https://habinh-wedding.github.io/img/hero-banner.jpg"
+    "photo": "img/hero-banner.jpg"
   },
   "quote": {
     "text": "Gặp gỡ là duyên phận, nắm tay là định mệnh, và cùng nhau bước vào lễ đường là lời hứa trọn đời. Cảm ơn vì giữa hàng triệu người trên thế giới, ta đã tìm thấy nhau.",
     "author": "Thu Hà & Thiên Bình"
+  },
+  "gift": {
+    "enabled": true,
+    "bankName": "VietinBank",
+    "accountName": "KIỀU THU HÀ",
+    "accountNumber": "109868921952",
+    "branch": "Thái Nguyên - Hội sở",
+    "qrPhoto": "img/QRcode.jpeg",
+    "message": "Sự hiện diện hay tình cảm và lời chúc phúc từ phương xa của quý khách đều là niềm vinh hạnh to lớn đối với gia đình chúng tôi!"
   },
   "music": {
     "title": "Mối Duyên Vàng",
