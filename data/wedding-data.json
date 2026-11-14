@@ -36,13 +36,7 @@
     "author": "Thu Hà & Thiên Bình"
   },
   "gift": {
-    "enabled": true,
-    "bankName": "VietinBank",
-    "accountName": "KIỀU THU HÀ",
-    "accountNumber": "109868921952",
-    "branch": "Thái Nguyên - Hội sở",
-    "qrPhoto": "img/QRcode.jpeg",
-    "message": "Sự hiện diện hay tình cảm và lời chúc phúc từ phương xa của quý khách đều là niềm vinh hạnh to lớn đối với gia đình chúng tôi!"
+    "enabled": false
   },
   "music": {
     "title": "Mối Duyên Vàng",

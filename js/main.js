@@ -582,7 +582,15 @@ async function initDynamicData() {
   }
 
   // Cập nhật STK & QR Code (Cô dâu: img/QRcode.jpeg)
-  if (data.gift && data.gift.enabled !== false) {
+  if (data.gift && data.gift.enabled === false) {
+    const giftSec = document.getElementById("gift");
+    if (giftSec) giftSec.style.display = "none";
+    document.querySelectorAll('a[href="#gift"]').forEach(el => {
+      const li = el.closest("li");
+      if (li) li.style.display = "none";
+      else el.style.display = "none";
+    });
+  } else if (data.gift && data.gift.enabled !== false) {
     const accNumberEl = document.getElementById("acc-number-text") || document.getElementById("acc-groom-text");
     if (accNumberEl && data.gift.accountNumber) accNumberEl.innerText = data.gift.accountNumber;
 
