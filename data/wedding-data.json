@@ -35,6 +35,9 @@
     "text": "\"Không lấy được nhau mùa hạ, ta sẽ lấy nhau mùa đông. Không lấy được nhau thời trẻ, ta sẽ lấy nhau lúc góa bụa về già.\"",
     "author": "Thu Hà & Thiên Bình"
   },
+  "gift": {
+    "enabled": false
+  },
   "music": {
     "title": "Mối Duyên Vàng",
     "url": "audio/moi-duyen-vang.mp3"
