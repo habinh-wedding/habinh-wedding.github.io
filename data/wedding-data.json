@@ -17,10 +17,10 @@
     "tag": "Lễ Vu Quy",
     "title": "LỄ VU QUY",
     "subtitle": "Tiệc Mừng Tổ Chức Tại Nhà Gái",
-    "datetime": "2026-11-27T16:00:00+07:00",
+    "datetime": "2026-11-26T22:00:00.000Z",
     "dateDisplay": "Thứ Sáu, 27 Tháng 11 Năm 2026",
-    "timeDisplay": "16:00 · Thứ Sáu, 27/11/2026",
-    "lunarDate": "19 tháng 10 năm Bính Ngọ",
+    "timeDisplay": "05:00 · Thứ Sáu, 27/11/2026",
+    "lunarDate": "20 tháng 10 năm Bính Ngọ",
     "venueName": "TƯ GIA NHÀ GÁI",
     "venueAddress": "Thôn Trung Hưng, xã Hợp Thịnh, thành phố Bắc Ninh",
     "mapUrl": "https://maps.app.goo.gl/4cpB2ekW9P5ouQrS6",
@@ -32,11 +32,8 @@
     "photo": "https://habinh-wedding.github.io/img/hero-banner.jpg"
   },
   "quote": {
-    "text": "\"Không lấy được nhau mùa hạ, ta sẽ lấy nhau mùa đông. Không lấy được nhau thời trẻ, ta sẽ lấy nhau lúc góa bụa về già.\"",
+    "text": "Không lấy được nhau mùa hạ, ta sẽ lấy nhau mùa đông. Không lấy được nhau thời trẻ, ta sẽ lấy nhau lúc góa bụa về già.",
     "author": "Thu Hà & Thiên Bình"
-  },
-  "gift": {
-    "enabled": false
   },
   "music": {
     "title": "Mối Duyên Vàng",
