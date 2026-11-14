@@ -2,45 +2,42 @@
   "bride": {
     "name": "Kiều Thu Hà",
     "role": "Cô Dâu",
-    "photo": "img/bride.jpg",
+    "photo": "https://habinh-wedding.github.io/img/bride.jpg",
     "father": "Kiều Hưng",
     "mother": "Triệu Thị Chinh"
   },
   "groom": {
     "name": "Nguyễn Hoàng Thiên Bình",
     "role": "Chú Rể",
-    "photo": "img/groom.jpg",
+    "photo": "https://habinh-wedding.github.io/img/groom.jpg",
     "father": "Nguyễn Duy Hiển",
     "mother": "Phùng Thiên Hương"
   },
   "ceremony": {
-    "tag": "Tiệc Mừng Thân Mật",
-    "title": "TIỆC MỪNG THÂN MẬT",
-    "subtitle": "Được Tổ Chức Tại Nhà Gái",
-    "datetime": "2026-11-27T16:00:00+07:00",
-    "dateDisplay": "Thứ Sáu, 27 Tháng 11 Năm 2026",
-    "timeDisplay": "16:00 · Thứ Sáu, 27/11/2026",
-    "lunarDate": "19 tháng 10 năm Bính Ngọ",
+    "tag": "Lễ Vu Quy",
+    "title": "LỄ VU QUY",
+    "subtitle": "Tiệc Mừng Tổ Chức Tại Nhà Gái",
+    "datetime": "2026-11-27T19:00:00.000Z",
+    "dateDisplay": "Thứ Bảy, 28 Tháng 11 Năm 2026",
+    "timeDisplay": "02:00 · Thứ Bảy, 28/11/2026",
+    "lunarDate": "20 tháng 10 năm Bính Ngọ",
     "venueName": "TƯ GIA NHÀ GÁI",
     "venueAddress": "Thôn Trung Hưng, xã Hợp Thịnh, thành phố Bắc Ninh",
     "mapUrl": "https://maps.app.goo.gl/4cpB2ekW9P5ouQrS6",
     "mapEmbedCoords": "21.3123181,105.9177815"
   },
   "hero": {
-    "tag": "Tiệc Mừng Thân Mật",
+    "tag": "Lễ Vu Quy",
     "heading": "Thiệp Mừng Báo Hỷ",
-    "photo": "img/hero-banner.jpg"
+    "photo": "https://habinh-wedding.github.io/img/hero-banner.jpg"
   },
   "quote": {
-    "text": "Gặp gỡ là duyên phận, nắm tay là định mệnh, và cùng nhau bước vào lễ đường là lời hứa trọn đời. Cảm ơn vì giữa hàng triệu người trên thế giới, ta đã tìm thấy nhau.",
+    "text": "\"Không lấy được nhau mùa hạ, ta sẽ lấy nhau mùa đông. Không lấy được nhau thời trẻ, ta sẽ lấy nhau lúc góa bụa về già.\"",
     "author": "Thu Hà & Thiên Bình"
   },
-  "gift": {
-    "enabled": false
-  },
   "music": {
-    "title": "Mối Duyên Vàng",
-    "url": "audio/moi-duyen-vang.mp3"
+    "title": "Beautiful in White - Shane Filan",
+    "url": "audio/beautiful-in-white.mp3"
   },
   "gallery": [
     {
