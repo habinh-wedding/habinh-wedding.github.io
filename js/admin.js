@@ -450,7 +450,7 @@ function collectFormData() {
     datetime: formattedDt,
     dateDisplay: dateDisp,
     timeDisplay: timeDisp,
-    lunarDate: getVal("ceremony-lunar") || "20 tháng 10 năm Bính Ngọ",
+    lunarDate: getVal("ceremony-lunar") || "19 tháng 10 năm Bính Ngọ",
     venueName: getVal("venue-name") || "TƯ GIA NHÀ GÁI",
     venueAddress: getVal("venue-address") || "Thôn Trung Hưng, xã Hợp Thịnh, thành phố Bắc Ninh",
     mapUrl: getVal("venue-map-url") || "https://maps.app.goo.gl/4cpB2ekW9P5ouQrS6",
